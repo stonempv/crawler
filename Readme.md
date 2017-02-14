@@ -11,14 +11,20 @@ This can be used to test the endpoint (or a real address like http://www.wiprodi
 This website is used for the integration tests so modifying this site may affect the success of the integration tests and conversly the integration tests require the server to be running to be 100% successful.
 
 ### How to build
-//Clone the git repository
+Clone the git repository
+```
 git clone https://github.com/stonempv/crawler.git
+```
 
 //navigate to the application root directory and run the application
+```
 ./gradlew clean bootRun
+```
 
 //Use a tool like curl or postman to test the endpoint
+```
 curl -X POST -H "Content-Type: application/json" -d '{"url":"http://www.wiprodigital.com/"}' http://localhost:8080/api/crawler/
+```
 
 // Wala!
 
