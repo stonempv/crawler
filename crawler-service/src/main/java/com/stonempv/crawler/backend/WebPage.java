@@ -23,6 +23,7 @@ public class WebPage {
 
   private HashMap<String, String> internalPages;
   private HashMap<String, String> externalLinks;
+  private HashMap<String, String> otherResources;
 
   public WebPage(Document doc, String host) {
     this.title = doc.title();
@@ -31,6 +32,7 @@ public class WebPage {
 
     internalPages = new HashMap<String, String>();
     externalLinks = new HashMap<String, String>();
+    otherResources = new HashMap<String, String>();
 
     Elements elements = doc.body().select("a[href]");
     for (Element element : elements) {
@@ -43,6 +45,11 @@ public class WebPage {
         }
       }
     }
+    Elements imgs = doc.body().select("img");
+    for (Element img : imgs) {
+      otherResources.put(img.attr("alt"), img.attr("src"));
+    }
+
   }
 
   private boolean isLocalURL(String url){
@@ -92,5 +99,13 @@ public class WebPage {
 
   public void setExternalLinks(HashMap<String, String> externalLinks) {
     this.externalLinks = externalLinks;
+  }
+
+  public HashMap<String, String> getOtherResources() {
+    return otherResources;
+  }
+
+  public void setOtherResources(HashMap<String, String> otherResources) {
+    this.otherResources = otherResources;
   }
 }
