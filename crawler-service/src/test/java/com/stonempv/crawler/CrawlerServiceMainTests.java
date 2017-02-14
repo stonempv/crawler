@@ -15,6 +15,8 @@ import java.net.URI;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/* IMPORTANT: Integration Test will only succeed when application is running */
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -63,12 +65,12 @@ public class CrawlerServiceMainTests {
   public void crawlGetsValidResults() {
 		ResponseEntity<CrawlerResponse> responseEntity =
             restTemplate.postForEntity("/api/crawler",
-                    new CrawlerRequest("http://localhost:8080"),
+                    new CrawlerRequest("http://localhost:8080/"),
                     CrawlerResponse.class);
 
-    assertThat(responseEntity.getBody().getUrl().toString()).isEqualTo("http://localhost:8080");
-    assertThat(responseEntity.getBody().getResults().equalsIgnoreCase("HelloWorld"));
-
+    assertThat(responseEntity.getBody().getUrl().toString()).isEqualTo("http://localhost:8080/");
+    String response = responseEntity.getBody().getResults().toString();
+    assertThat(response).isEqualTo("Hello World");
   }
 
 }

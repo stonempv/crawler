@@ -1,7 +1,11 @@
 package com.stonempv.crawler.backend;
 
 import com.stonempv.crawler.web.CrawlerResponse;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -18,7 +22,17 @@ public class CrawlerService {
     return new CrawlerResponse(url, crawl());
   }
 
-  private String crawl() {
-    return "Hello World";
+  private Object crawl() {
+
+    Object map;
+    try {
+      Document document = Jsoup.connect(url.toString()).get();
+
+      map = new String("Hello World");
+    } catch (IOException e){
+      System.out.println("bad");
+      map = null;
+    }
+    return map;
   }
 }

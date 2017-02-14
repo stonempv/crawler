@@ -10,11 +10,11 @@ import java.net.URL;
 public class CrawlerResponse {
 
   private URL url;
-  private String results;
+  private Object results;
 
   protected CrawlerResponse() {}
 
-  public CrawlerResponse(URL url, String results) {
+  public CrawlerResponse(URL url, Object results) {
     this.url = url;
     this.results = results;
   }
@@ -27,11 +27,11 @@ public class CrawlerResponse {
     this.url = uri;
   }
 
-  public String getResults() {
+  public Object getResults() {
     return results;
   }
 
-  public void setResults(String results) {
+  public void setResults(Object results) {
     this.results = results;
   }
 }
