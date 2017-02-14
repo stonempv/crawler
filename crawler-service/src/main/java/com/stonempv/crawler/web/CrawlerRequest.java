@@ -13,19 +13,19 @@ import java.net.URI;
 public class CrawlerRequest {
 
   @NotNull
-  private String uri;
+  private String url;
 
   protected CrawlerRequest() {}
 
-  public CrawlerRequest(String uri){
-    this.uri = uri;
+  public CrawlerRequest(String url){
+    this.url = url;
   }
 
-  public String getUri() {
-    return uri;
+  public String getUrl() {
+    return url;
   }
 
-  public void setUri(String uri) {
-    this.uri = uri;
+  public void setUrl(String url) {
+    this.url = url;
   }
 }

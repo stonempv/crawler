@@ -3,5 +3,6 @@ apply plugin: 'org.springframework.boot'
 dependencies {
 
 	compile "org.springframework.boot:spring-boot-starter-web"
+	compile 'org.jsoup:jsoup:1.10.2'
 	testCompile "org.springframework.boot:spring-boot-starter-test"
 }

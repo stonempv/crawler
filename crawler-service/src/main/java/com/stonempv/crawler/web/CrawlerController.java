@@ -2,8 +2,13 @@ package com.stonempv.crawler.web;
 
 import com.stonempv.crawler.backend.CrawlerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URL;
+import java.net.MalformedURLException;
 
 
 /**
@@ -21,8 +26,18 @@ public class CrawlerController {
   }
 
   @RequestMapping(method = RequestMethod.POST)
-  public @ResponseBody CrawlerResponse crawl(@Validated @RequestBody CrawlerRequest request) {
-    return crawlerService.doCrawl(request.getUri());
+  public @ResponseBody Object crawl(@Validated @RequestBody CrawlerRequest request) {
+
+    Object response;
+
+    try {
+      response = crawlerService.doCrawl(new URL(request.getUrl()));
+
+    } catch (MalformedURLException e){
+      response =  new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    return response;
   }
 
 

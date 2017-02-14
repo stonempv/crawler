@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.net.URI;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -19,31 +21,54 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CrawlerServiceMainTests {
 
-		@Autowired
-		private TestRestTemplate restTemplate;
+  @Autowired
+  private TestRestTemplate restTemplate;
 
 
-		@Test
-		public void checkValidPost() {
-			ResponseEntity<CrawlerResponse> responseEntity =
-							restTemplate.postForEntity("/api/crawler",
-											new CrawlerRequest("localhost:8080"),
-											CrawlerResponse.class);
+  @Test
+  public void checkValidPost() {
+    ResponseEntity<CrawlerResponse> responseEntity =
+            restTemplate.postForEntity("/api/crawler",
+                    new CrawlerRequest("http://www.thisdoesntresolve.com/"),
+                    CrawlerResponse.class);
 
-			assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-			assertThat(responseEntity.getBody().getUri()).isEqualTo("localhost:8080");
+    assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-		}
 
-		@Test
-		public void checkInvalidPost() {
-			ResponseEntity<CrawlerResponse> responseEntity =
-						restTemplate.postForEntity("/api/crawler",
-										new CrawlerRequest(null),
+  }
+
+  @Test
+  public void checkInvalidPost() {
+    ResponseEntity<CrawlerResponse> responseEntity =
+            restTemplate.postForEntity("/api/crawler",
+                    new CrawlerRequest(null),
 										CrawlerResponse.class);
 
-		assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 
 	}
+
+  @Test
+  public void crawlCheckBadTarget() {
+    ResponseEntity<CrawlerResponse> responseEntity =
+            restTemplate.postForEntity("/api/crawler",
+                    new CrawlerRequest("...sdfa.fds"),
+                    CrawlerResponse.class);
+
+    assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+
+  }
+
+	@Test
+  public void crawlGetsValidResults() {
+		ResponseEntity<CrawlerResponse> responseEntity =
+            restTemplate.postForEntity("/api/crawler",
+                    new CrawlerRequest("http://localhost:8080"),
+                    CrawlerResponse.class);
+
+    assertThat(responseEntity.getBody().getUrl().toString()).isEqualTo("http://localhost:8080");
+    assertThat(responseEntity.getBody().getResults().equalsIgnoreCase("HelloWorld"));
+
+  }
 
 }

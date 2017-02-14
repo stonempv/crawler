@@ -1,28 +1,30 @@
 package com.stonempv.crawler.web;
 
-import java.net.URI;
+import org.springframework.http.ResponseEntity;
+
+import java.net.URL;
 
 /**
  * Created by mi332208 on 13/02/2017.
  */
 public class CrawlerResponse {
 
-  private String uri;
+  private URL url;
   private String results;
 
   protected CrawlerResponse() {}
 
-  public CrawlerResponse(String uri, String results) {
-    this.uri = uri;
+  public CrawlerResponse(URL url, String results) {
+    this.url = url;
     this.results = results;
   }
 
-  public String getUri() {
-    return uri;
+  public URL getUrl() {
+    return url;
   }
 
-  public void setUri(String uri) {
-    this.uri = uri;
+  public void setUrl(URL uri) {
+    this.url = uri;
   }
 
   public String getResults() {
