@@ -27,11 +27,11 @@ public class CrawlerServiceMainTests {
 		public void checkValidPost() {
 			ResponseEntity<CrawlerResponse> responseEntity =
 							restTemplate.postForEntity("/api/crawler",
-											new CrawlerRequest("www.google.com"),
+											new CrawlerRequest("localhost:8080"),
 											CrawlerResponse.class);
 
 			assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-			assertThat(responseEntity.getBody().getUri()).isEqualTo("www.google.com");
+			assertThat(responseEntity.getBody().getUri()).isEqualTo("localhost:8080");
 
 		}
 
