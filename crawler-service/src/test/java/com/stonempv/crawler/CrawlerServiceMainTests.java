@@ -63,14 +63,13 @@ public class CrawlerServiceMainTests {
 
 	@Test
   public void crawlGetsValidResults() {
-		ResponseEntity<CrawlerResponse> responseEntity =
+    ResponseEntity<CrawlerResponse> responseEntity =
             restTemplate.postForEntity("/api/crawler",
                     new CrawlerRequest("http://localhost:8080/"),
                     CrawlerResponse.class);
 
     assertThat(responseEntity.getBody().getUrl().toString()).isEqualTo("http://localhost:8080/");
     String response = responseEntity.getBody().getResults().toString();
-    assertThat(response).isEqualTo("Hello World");
+    assertThat(response).isEqualTo("{/={title=Test Page for Crawler, location=http://localhost:8080/, internalPages={http://localhost:8080/pages/page2.html=Other link to Page 2, http://localhost:8080/page1.html=Link to Page 1}, externalLinks={http://www.google.com=Google it}}, /page1.html={title=Test Page for Crawler, location=http://localhost:8080/page1.html, internalPages={http://localhost:8080/pages/subpages/subpage2.html=Link to Sub Page 2, http://localhost:8080/pages/subpages/subpage1.html=Link to Sub Page 1, http://localhost:8080/=Link to Home}, externalLinks={}}, /pages/page2.html={title=Test Page for Crawler, location=http://localhost:8080/pages/page2.html, internalPages={http://localhost:8080/pages/subpages/subpage3.html=Link to Sub Page 3, http://localhost:8080/pages/subpages/subpage2.html=Link to Sub Page 2, http://localhost:8080/=Link to Home}, externalLinks={}}, /pages/subpages/subpage1.html={title=Test Page for Crawler, location=http://localhost:8080/pages/subpages/subpage1.html, internalPages={http://localhost:8080/=Link to Home}, externalLinks={}}, /pages/subpages/subpage2.html={title=Test Page for Crawler, location=http://localhost:8080/pages/subpages/subpage2.html, internalPages={http://localhost:8080/=Link to Home}, externalLinks={}}, /pages/subpages/subpage3.html={title=Test Page for Crawler, location=http://localhost:8080/pages/subpages/subpage3.html, internalPages={http://localhost:8080/=Link to Home}, externalLinks={}}}");
   }
-
 }
