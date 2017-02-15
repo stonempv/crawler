@@ -45,6 +45,17 @@ Apart from the areas where the code is shit because I'm rusty as f00k the follow
 5. Split the responsibility for doing the crawl and presenting the results
 6. Look at how multithreading could be used to do the crawl
 7. Add unit tests
+
+
+
+## More Improvements based on Code Review
+1. Handle exception URL's in a more useful way, perhaps create a new section in the JSON to report on them?
+2. Modify the architecture to return a response immediately with unique id and queue the job
+3. Provide new endpoint for querying the status of a crawl
+4. Provide a new endpoint to retrieve the results of a query
+5. Split the responsibility for doing the crawl and presenting the results
+6. Look at how multithreading could be used to do the crawl
+7. Add unit tests
 8. Git Ignore .DS_Store
 
 
