@@ -35,7 +35,7 @@ Apart from the areas where the code is shit because I'm rusty as f00k the follow
 2. Could be improved by adding Swagger over the top but this seem reasonably trivial and I wanted feedback on the important stuff.
 3. I tested largely against the Integration tests but I think more unit test could be important
 4. I used recursion which always scares me a little bit, but I struggled to think of a better approach.
-git
+
 ## More Improvements based on Code Review
 1. Handle exception URL's in a more useful way, perhaps create a new section in the JSON to report on them?
 2. Modify the architecture to return a response immediately with unique id and queue the job
