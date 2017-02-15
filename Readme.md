@@ -31,7 +31,6 @@ Wala!
 
 ## Improvements
 Apart from the areas where the code is shit because I'm rusty as f00k the following improvements should be made.
-
 1. The project is structured as a microservice architecture which is a bit over the top for one service, to extend this out for more services Docker should be implemented as SpringBoot will only run one service at a time (as far as I can see)
 2. Could be improved by adding Swagger over the top but this seem reasonably trivial and I wanted feedback on the important stuff.
 3. I tested largely against the Integration tests but I think more unit test could be important
@@ -45,19 +44,7 @@ Apart from the areas where the code is shit because I'm rusty as f00k the follow
 5. Split the responsibility for doing the crawl and presenting the results
 6. Look at how multithreading could be used to do the crawl
 7. Add unit tests
-
-
-
-## More Improvements based on Code Review
-1. Handle exception URL's in a more useful way, perhaps create a new section in the JSON to report on them?
-2. Modify the architecture to return a response immediately with unique id and queue the job
-3. Provide new endpoint for querying the status of a crawl
-4. Provide a new endpoint to retrieve the results of a query
-5. Split the responsibility for doing the crawl and presenting the results
-6. Look at how multithreading could be used to do the crawl
-7. Add unit tests
 8. Git Ignore .DS_Store
-
 
 
 Thanks for your help
