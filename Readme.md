@@ -31,6 +31,7 @@ Wala!
 
 ## Improvements
 Apart from the areas where the code is shit because I'm rusty as f00k the following improvements should be made.
+
 1. The project is structured as a microservice architecture which is a bit over the top for one service, to extend this out for more services Docker should be implemented as SpringBoot will only run one service at a time (as far as I can see)
 2. Could be improved by adding Swagger over the top but this seem reasonably trivial and I wanted feedback on the important stuff.
 3. I tested largely against the Integration tests but I think more unit test could be important
