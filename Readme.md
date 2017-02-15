@@ -45,7 +45,7 @@ Apart from the areas where the code is shit because I'm rusty as f00k the follow
 5. Split the responsibility for doing the crawl and presenting the results
 6. Look at how multithreading could be used to do the crawl
 7. Add unit tests
-8. Git Ignore .DS_Store
+8. ~~Git Ignore .DS_Store~~
 
 
 Thanks for your help
