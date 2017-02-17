@@ -1,3 +1,5 @@
 include 'crawler-service'
+include 'api-gateway-service'
+include 'common'
 
 rootProject.name ='crawler'

@@ -1,11 +1,6 @@
-package com.stonempv.crawler.web;
+package com.stonempv.crawler.common.crawler;
 
-import org.hibernate.validator.constraints.URL;
-
-import javax.validation.Constraint;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.net.URI;
 
 /**
  * Created by mi332208 on 13/02/2017.

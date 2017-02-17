@@ -11,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.net.URI;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 /* IMPORTANT: Integration Test will only succeed when application is running */

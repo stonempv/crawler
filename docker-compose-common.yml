@@ -1,0 +1,15 @@
+apigateway:
+  build: ./api-gateway-service/
+  restart: unless-stopped
+  ports:
+    - "8080:8080"
+  environment:
+    CRAWLER_SERVICE_HOST: crawlerservice
+
+
+crawlerservice:
+  build: ./crawler-service/
+  restart: unless-stopped
+  ports:
+    - "8081:8080"
+

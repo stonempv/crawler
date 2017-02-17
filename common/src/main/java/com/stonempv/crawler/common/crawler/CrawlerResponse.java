@@ -1,6 +1,5 @@
-package com.stonempv.crawler.web;
+package com.stonempv.crawler.common.crawler;
 
-import org.springframework.http.ResponseEntity;
 
 import java.net.URL;
 

@@ -18,7 +18,10 @@ git clone https://github.com/stonempv/crawler.git
 
 Navigate to the application root directory and run the application
 ```
-./gradlew clean bootRun
+./gradlew assemble
+sudo sh ./set-env.sh
+docker-compose build
+docker-compose up -d --build
 ```
 
 Use a tool like curl or postman to test the endpoint
@@ -32,7 +35,7 @@ Wala!
 ## Improvements
 Apart from the areas where the code is shit because I'm rusty as f00k the following improvements should be made.
 
-1. The project is structured as a microservice architecture which is a bit over the top for one service, to extend this out for more services Docker should be implemented as SpringBoot will only run one service at a time (as far as I can see)
+1. ~~The project is structured as a microservice architecture which is a bit over the top for one service, to extend this out for more services Docker should be implemented as SpringBoot will only run one service at a time (as far as I can see)~~
 2. Could be improved by adding Swagger over the top but this seem reasonably trivial and I wanted feedback on the important stuff.
 3. I tested largely against the Integration tests but I think more unit test could be important
 4. I used recursion which always scares me a little bit, but I struggled to think of a better approach.

@@ -1,8 +1,10 @@
 apply plugin: 'org.springframework.boot'
 
 dependencies {
+	compile project(":common")
 
 	compile "org.springframework.boot:spring-boot-starter-web"
 	compile 'org.jsoup:jsoup:1.10.2'
+	compile "org.springframework.boot:spring-boot-starter-amqp"
 	testCompile "org.springframework.boot:spring-boot-starter-test"
 }

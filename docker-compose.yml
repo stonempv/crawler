@@ -1,0 +1,12 @@
+apigateway:
+  extends:
+    file: docker-compose-common.yml
+    service: apigateway
+  links:
+    - crawlerservice
+
+
+crawlerservice:
+  extends:
+    file: docker-compose-common.yml
+    service: crawlerservice

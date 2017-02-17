@@ -1,6 +1,6 @@
 package com.stonempv.crawler.backend;
 
-import com.stonempv.crawler.web.CrawlerResponse;
+import com.stonempv.crawler.common.crawler.CrawlerResponse;
 
 import java.net.URL;
 
