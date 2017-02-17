@@ -1,6 +1,8 @@
 package com.stonempv.crawler.queue.web;
 
+import com.stonempv.crawler.common.crawler.CrawlerCreateResponse;
 import com.stonempv.crawler.common.crawler.CrawlerRequest;
+import com.stonempv.crawler.common.crawler.QueueResponse;
 import com.stonempv.crawler.queue.backend.CrawlerQueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,37 +32,53 @@ public class CrawlerQueueController {
   public @ResponseBody
   ResponseEntity<?> addCrawlTask(@Validated @RequestBody CrawlerRequest request) {
 
-    Object response;
-
     try {
-      String taskId = queueService.addCrawlTask(new URL(request.getUrl()));
+      String taskId = queueService.addCrawlTask(new URL(decorateURL(request.getUrl())));
 
       if (taskId != null) {
-        //TODO add success response
-        response = null;
+        return ResponseEntity.accepted().body(new CrawlerCreateResponse(queueTaskUrl(taskId)));
       } else {
-        //TODO add other failed response
-        response = null;
+        return new ResponseEntity<>("Your Crawl Request was not accepted", HttpStatus.NOT_ACCEPTABLE);
       }
 
     } catch (MalformedURLException e){
-      //TODO add malformed URLException response
-      response =  null;
+      return new ResponseEntity<>("URL Passed is not a valid URL", HttpStatus.BAD_REQUEST);
     }
 
-    return new ResponseEntity<>("Create Task Not Yet Implemented", HttpStatus.NOT_IMPLEMENTED);
   }
 
-  @RequestMapping(path = "/queue/{jobId}", method = RequestMethod.GET)
-  public @ResponseBody ResponseEntity<?> getCrawlTask(){
-    //TODO implement get queued task
-    return new ResponseEntity<>("Get Task Not Yet Implemented", HttpStatus.NOT_IMPLEMENTED);
+  @RequestMapping(path = "/queue/{taskId}", method = RequestMethod.GET)
+  public @ResponseBody ResponseEntity<?> isCrawlTaskInQueue(@PathVariable("taskId") String taskId) {
+    if (queueService.isCrawlTaskInQueue(taskId)) {
+      return ResponseEntity.ok().body(new QueueResponse("pending", queueTaskUrl(taskId)));
+    } else {
+      return new ResponseEntity<>(new QueueResponse("processed", crawlerTaskUrl(taskId)), HttpStatus.GONE);
+    }
   }
 
-  @RequestMapping(path = "/queue/{jobId}", method = RequestMethod.DELETE)
-  public @ResponseBody ResponseEntity<?> deleteCrawlTask(){
-    //TODO implement delete queue task
-    return new ResponseEntity<>("Delete Task Not Yet Implemented", HttpStatus.NOT_IMPLEMENTED);
+  @RequestMapping(path = "/queue/{taskId}", method = RequestMethod.DELETE)
+  public @ResponseBody ResponseEntity<?> deleteCrawlTask(@PathVariable("taskId") String taskId){
+    if (queueService.deleteCrawlTask(taskId)){
+      return ResponseEntity.ok().body("");
+    } else {
+      return new ResponseEntity<>(null, HttpStatus.GONE);
+    }
   }
 
+
+  public static String decorateURL(String uri){
+    String url = uri;
+    if (!url.toLowerCase().matches("^\\w+://.*")) {
+      url = "http://" + url;
+    }
+    return url;
+  }
+
+  public static String queueTaskUrl(String taskId){
+    return "/api/queue/" + taskId;
+  }
+
+  public static String crawlerTaskUrl(String taskId){
+    return "/api/crawler/" + taskId;
+  }
 }

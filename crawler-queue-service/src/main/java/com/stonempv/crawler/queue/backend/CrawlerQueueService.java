@@ -15,4 +15,15 @@ public class CrawlerQueueService {
     return null;
   }
 
+  public boolean isCrawlTaskInQueue(String taskId){
+    //TODO implement poll Task
+    //Options should be either InProgress or a 410 message
+    return false;
+  }
+
+  public boolean deleteCrawlTask(String taskId){
+    //TODO implement delete task
+    return false;
+  }
+
 }
