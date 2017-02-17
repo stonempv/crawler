@@ -1,5 +1,7 @@
 include 'crawler-service'
+include 'crawler-queue-service'
 include 'api-gateway-service'
 include 'common'
 
 rootProject.name ='crawler'
+

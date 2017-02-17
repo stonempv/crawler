@@ -4,9 +4,23 @@ apigateway:
     service: apigateway
   links:
     - crawlerservice
+    - crawlerqueueservice
+    - rabbitmq
 
 
 crawlerservice:
   extends:
     file: docker-compose-common.yml
     service: crawlerservice
+
+crawlerqueueservice:
+  extends:
+    file: docker-compose-common.yml
+    service: crawlerqueueservice
+  links:
+    - rabbitmq
+
+rabbitmq:
+  extends:
+    file: docker-compose-common.yml
+    service: rabbitmq
