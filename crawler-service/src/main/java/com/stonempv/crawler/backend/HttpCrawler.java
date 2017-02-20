@@ -2,6 +2,8 @@ package com.stonempv.crawler.backend;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -12,32 +14,40 @@ import java.util.*;
  */
 public class HttpCrawler {
 
-  private ArrayList<String> crawledPages = new ArrayList();
-  private SortedMap<String, WebPage> results = new TreeMap<String, WebPage>();
+  private SiteMap siteMap;
 
-  public SortedMap<String, WebPage> doCrawl(URL url){
 
-    if (!crawledPages.contains(url.getPath())) {
-      try {
+  private static final Logger LOGGER = LoggerFactory
+          .getLogger(HttpCrawler.class);
 
-        Document document = Jsoup.connect(url.toString()).get();
-        WebPage page = new WebPage(document, url.getHost());
-        results.put(url.getPath(), page);
-        crawledPages.add(url.getPath());
+  public HttpCrawler(URL url) {
+    this.siteMap = new SiteMap(url.toString());
+  }
 
-        Iterator it = page.getInternalPages().entrySet().iterator();
-        while (it.hasNext()) {
-          Map.Entry pair = (Map.Entry) it.next();
-          URL childUrl = new URL(pair.getKey().toString());
+
+  public void doCrawl(URL url){
+    try{
+      Document document = Jsoup.connect(url.toString()).get();
+
+      WebPage webPage = WebPageCrawl.crawlWebPage(document, url.getHost());
+      siteMap.addWebPage(url, webPage);
+
+      Iterator it = webPage.getInternalPages().entrySet().iterator();
+      while (it.hasNext()) {
+        Map.Entry pair = (Map.Entry) it.next();
+        URL childUrl = new URL(pair.getKey().toString());
+        if( !this.siteMap.hasPage(childUrl) ) {
           doCrawl(childUrl);
         }
-
-
-      } catch (IOException e) {
-        System.out.println(e);
       }
+
+    } catch (IOException e) {
+      LOGGER.error("Failed to processes url", e);
     }
-    return results;
+  }
+
+  public SiteMap getSiteMap(){
+    return siteMap;
   }
 
 }
