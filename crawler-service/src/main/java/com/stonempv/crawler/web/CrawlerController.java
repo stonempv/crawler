@@ -26,10 +26,13 @@ public class CrawlerController {
     this.crawlerService = crawlerService;
   }
 
-  @RequestMapping(method = RequestMethod.POST)
-  public @ResponseBody Object crawl(@Validated @RequestBody CrawlerRequest request) {
+  @RequestMapping(value = "{crawlId}", method = RequestMethod.GET)
+  public @ResponseBody ResponseEntity<?> getCrawlResults(){
+    //TODO implement get crawl task
+    return new ResponseEntity<>("Get Crawl Results Not Yet Implemented", HttpStatus.NOT_IMPLEMENTED);
+  }
 
-    Object response;
+    /*Object response;
 
     try {
       response = crawlerService.doCrawl(new URL(request.getUrl()));
@@ -39,7 +42,7 @@ public class CrawlerController {
     }
 
     return response;
-  }
+    */
 
 
 }

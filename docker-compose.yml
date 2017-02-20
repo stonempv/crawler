@@ -4,9 +4,31 @@ apigateway:
     service: apigateway
   links:
     - crawlerservice
+    - crawlerqueueservice
+    - kafka
 
 
 crawlerservice:
   extends:
     file: docker-compose-common.yml
     service: crawlerservice
+  links:
+    - kafka
+    - mongodb
+
+crawlerqueueservice:
+  extends:
+    file: docker-compose-common.yml
+    service: crawlerqueueservice
+  links:
+    - kafka
+
+kafka:
+  extends:
+    file: docker-compose-common.yml
+    service: kafka
+
+mongodb:
+  extends:
+    file: docker-compose-common.yml
+    service: mongodb
