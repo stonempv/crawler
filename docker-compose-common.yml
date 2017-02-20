@@ -20,8 +20,19 @@ crawlerqueueservice:
   ports:
     - "8082:8080"
 
-rabbitmq:
-  image: rabbitmq:management
+kafka:
+  image: spotify/kafka
+  hostname: kafka
+  environment:
+    ADVERTISED_HOST: kafka
+    ADVERTISED_PORT: 9092
   ports:
-    - "5672:5672"
-    - "15672:15672"
+    - "9092:9092"
+    - "2181:2181"
+
+mongodb:
+  image: mongo:3.0.4
+  hostname: mongodb
+  command: mongod --smallfiles
+  ports:
+    - "27017:27017"

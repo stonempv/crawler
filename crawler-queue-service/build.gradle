@@ -4,6 +4,6 @@ dependencies {
     compile project(":common")
 
     compile "org.springframework.boot:spring-boot-starter-web"
-    compile "org.springframework.boot:spring-boot-starter-amqp"
+    compile "org.springframework.kafka:spring-kafka"
     testCompile "org.springframework.boot:spring-boot-starter-test"
 }

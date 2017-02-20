@@ -27,7 +27,7 @@ public class QueueResponse {
     this.url = uri;
   }
 
-  public String getRtatus() {
+  public String getStatus() {
     return status;
   }
 

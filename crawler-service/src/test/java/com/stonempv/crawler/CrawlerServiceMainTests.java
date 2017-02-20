@@ -1,7 +1,7 @@
 package com.stonempv.crawler;
 
-import com.stonempv.crawler.web.CrawlerRequest;
-import com.stonempv.crawler.web.CrawlerResponse;
+import com.stonempv.crawler.common.crawler.CrawlerRequest;
+import com.stonempv.crawler.common.crawler.CrawlerResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -7,6 +7,9 @@ import com.stonempv.crawler.queue.backend.CrawlerQueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.support.SendResult;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,7 +64,7 @@ public class CrawlerQueueController {
     if (queueService.deleteCrawlTask(taskId)){
       return ResponseEntity.ok().body("");
     } else {
-      return new ResponseEntity<>(null, HttpStatus.GONE);
+      return new ResponseEntity("", HttpStatus.GONE);
     }
   }
 
