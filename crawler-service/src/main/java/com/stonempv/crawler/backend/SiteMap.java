@@ -17,7 +17,7 @@ public class SiteMap {
   private SortedMap<String, WebPage> pages;
 
   public SiteMap(String id) {
-    this.id = id;
+    this.id = convertId(id);
     pages = new TreeMap<>();
   }
 
@@ -29,12 +29,36 @@ public class SiteMap {
     return pages.containsKey(addTrailingSlash(url.getPath()));
   }
 
+  public String getId(){
+    return this.id;
+  }
+
+  public SortedMap<String, WebPage> getPages(){
+    return this.pages;
+  }
+
   private String addTrailingSlash(String url){
     if(url.endsWith("/")){
       return url;
     } else {
       return url + "/";
     }
+  }
+
+  private String convertId(String url){
+    String newId;
+    if(url.startsWith("http://")){
+      newId = url.substring(7, url.length());
+    } else {
+      newId = url;
+    }
+    if(newId.endsWith("/")) {
+      newId = newId.substring(0, newId.length()-1);
+    }
+    newId = newId.replaceAll("\\.","_");
+    newId = newId.replaceAll("/","_");
+    return newId;
+
   }
 
 }

@@ -1,5 +1,6 @@
 package com.stonempv.crawler.backend;
 
+import com.stonempv.crawler.common.crawler.CrawlerResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,10 @@ public class CrawlerService {
     } catch (MalformedURLException e){
       LOGGER.error("Could no create crawl request for {}", message);
     }
+  }
+
+  public SiteMap returnResults(String crawlId) {
+    return repository.findById(crawlId);
   }
 
 

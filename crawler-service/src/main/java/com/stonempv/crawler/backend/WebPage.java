@@ -43,6 +43,10 @@ public class WebPage {
   public HashMap<String, String> getInternalPages(){
     return internalPages;
   }
+  public HashMap<String, String> getExternalLinks(){
+    return externalLinks;
+  }
+  public HashMap<String, String> getOtherResources() { return otherResources; }
 
   private boolean isLocalURL(String url){
     try {

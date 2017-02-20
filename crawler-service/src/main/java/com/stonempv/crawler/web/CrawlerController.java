@@ -1,7 +1,10 @@
 package com.stonempv.crawler.web;
 
+import com.stonempv.crawler.backend.SiteMap;
 import com.stonempv.crawler.common.crawler.CrawlerRequest;
 import com.stonempv.crawler.backend.CrawlerService;
+import com.stonempv.crawler.common.crawler.CrawlerResponse;
+import com.stonempv.crawler.common.crawler.QueueResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,22 +30,13 @@ public class CrawlerController {
   }
 
   @RequestMapping(value = "{crawlId}", method = RequestMethod.GET)
-  public @ResponseBody ResponseEntity<?> getCrawlResults(){
-    //TODO implement get crawl task
-    return new ResponseEntity<>("Get Crawl Results Not Yet Implemented", HttpStatus.NOT_IMPLEMENTED);
-  }
-
-    /*Object response;
-
-    try {
-      response = crawlerService.doCrawl(new URL(request.getUrl()));
-
-    } catch (MalformedURLException e){
-      response =  new ResponseEntity(HttpStatus.BAD_REQUEST);
+  public @ResponseBody ResponseEntity<?> getCrawlResults(@PathVariable("crawlId") String crawlId) {
+    SiteMap map = crawlerService.returnResults(crawlId);
+    if (map != null) {
+      return ResponseEntity.ok().body(new CrawlerResponse(map.getId(), map.getPages()));
+    } else {
+      return new ResponseEntity<>("Request Not Found", HttpStatus.NOT_FOUND);
     }
-
-    return response;
-    */
-
+  }
 
 }

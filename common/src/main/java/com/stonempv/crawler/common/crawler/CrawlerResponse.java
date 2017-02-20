@@ -8,21 +8,21 @@ import java.net.URL;
  */
 public class CrawlerResponse {
 
-  private URL url;
+  private String url;
   private Object results;
 
   protected CrawlerResponse() {}
 
-  public CrawlerResponse(URL url, Object results) {
+  public CrawlerResponse(String url, Object results) {
     this.url = url;
     this.results = results;
   }
 
-  public URL getUrl() {
+  public String getUrl() {
     return url;
   }
 
-  public void setUrl(URL uri) {
+  public void setUrl(String uri) {
     this.url = uri;
   }
 
