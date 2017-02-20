@@ -1,55 +1,47 @@
 package com.stonempv.crawler.backend;
 
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import org.springframework.data.annotation.Id;
 
-import javax.print.Doc;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
- * Created by mi332208 on 14/02/2017.
+ * Created by mi332208 on 20/02/2017.
  */
 public class WebPage {
 
-  private List<String> crawledPages;
-
-  private String title;
-  private String location;
+  @Id private String title;
+  private String href;
   private String host;
 
   private HashMap<String, String> internalPages;
   private HashMap<String, String> externalLinks;
   private HashMap<String, String> otherResources;
 
-  public WebPage(Document doc, String host) {
-    this.title = doc.title();
-    this.location = doc.location();
+  public WebPage(String title, String href, String host){
+    this.title = title;
+    this.href = href;
     this.host = host;
 
     internalPages = new HashMap<String, String>();
     externalLinks = new HashMap<String, String>();
     otherResources = new HashMap<String, String>();
+  }
 
-    Elements elements = doc.body().select("a[href]");
-    for (Element element : elements) {
-      String href = element.attr("abs:href");
-      if (!href.equals("")) {
-        if (isLocalURL(href)) {
-          internalPages.put(element.attr("abs:href"), element.ownText());
-        } else {
-          externalLinks.put(element.attr("abs:href"), element.ownText());
-        }
-      }
+  public void addChildPage(String title, String href) {
+    if (isLocalURL(href)) {
+      internalPages.put(href, title);
+    } else {
+      externalLinks.put(href, title);
     }
-    Elements imgs = doc.body().select("img");
-    for (Element img : imgs) {
-      otherResources.put(img.attr("alt"), img.attr("src"));
-    }
+  }
 
+  public void addOtherResource(String title, String href){
+    otherResources.put(href, title);
+  }
+
+  public HashMap<String, String> getInternalPages(){
+    return internalPages;
   }
 
   private boolean isLocalURL(String url){
@@ -69,43 +61,4 @@ public class WebPage {
     }
   }
 
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public String getLocation() {
-    return location;
-  }
-
-  public void setLocation(String location) {
-    this.location = location;
-  }
-
-  public HashMap<String, String> getInternalPages() {
-    return internalPages;
-  }
-
-  public void setInternalPages(HashMap<String, String> internalPages) {
-    this.internalPages = internalPages;
-  }
-
-  public HashMap<String, String> getExternalLinks() {
-    return externalLinks;
-  }
-
-  public void setExternalLinks(HashMap<String, String> externalLinks) {
-    this.externalLinks = externalLinks;
-  }
-
-  public HashMap<String, String> getOtherResources() {
-    return otherResources;
-  }
-
-  public void setOtherResources(HashMap<String, String> otherResources) {
-    this.otherResources = otherResources;
-  }
 }

@@ -1,10 +1,11 @@
 package com.stonempv.crawler.backend;
 
-import com.stonempv.crawler.common.crawler.CrawlerResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -12,19 +13,29 @@ import java.net.URL;
  */
 public class CrawlerService {
 
+  @Autowired
+  private SiteMapRepository repository;
+
   private static final Logger LOGGER = LoggerFactory
           .getLogger(CrawlerService.class);
 
   protected CrawlerService()  {}
 
-  @KafkaListener(topics = "Crawler.new")
-  public void receiveMessage(String message) {
-    LOGGER.info("received message='{}'", message);
-  }
 
-  public CrawlerResponse doCrawl(URL url){
-    HttpCrawler crawler = new HttpCrawler();
-    return new CrawlerResponse(url, crawler.doCrawl(url));
+  @KafkaListener(topics = "Crawler.new")
+  public void doCrawl(String message){
+    LOGGER.info("received message='{}'", message);
+    try {
+      URL url = new URL(message);
+      HttpCrawler crawler = new HttpCrawler(url);
+      crawler.doCrawl(url);
+      SiteMap siteMap = crawler.getSiteMap();
+
+      repository.save(siteMap);
+
+    } catch (MalformedURLException e){
+      LOGGER.error("Could no create crawl request for {}", message);
+    }
   }
 
 
