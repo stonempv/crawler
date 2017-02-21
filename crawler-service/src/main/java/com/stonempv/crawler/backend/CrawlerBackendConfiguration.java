@@ -40,6 +40,7 @@ public class CrawlerBackendConfiguration {
     // consumer groups allow a pool of processes to divide the work of
     // consuming and processing records
     props.put(ConsumerConfig.GROUP_ID_CONFIG, "Crawler");
+    props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
     return props;
   }

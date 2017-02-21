@@ -5,6 +5,7 @@ import com.stonempv.crawler.apigateway.utils.ContentRequestTransformer;
 import com.stonempv.crawler.apigateway.utils.HeadersRequestTransformer;
 import com.stonempv.crawler.apigateway.utils.URLRequestTransformer;
 import org.apache.http.Header;
+import org.apache.http.HttpMessage;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -59,13 +60,16 @@ public class GatewayController {
     logger.info("request: {}", proxiedRequest);
     HttpResponse proxiedResponse = httpClient.execute(proxiedRequest);
     logger.info("Response {}", proxiedResponse.getStatusLine().getStatusCode());
+    logger.info("Headers {}", proxiedResponse.getHeaders("Location"));
     return new ResponseEntity<>(read(proxiedResponse.getEntity().getContent()), makeResponseHeaders(proxiedResponse), HttpStatus.valueOf(proxiedResponse.getStatusLine().getStatusCode()));
+
   }
 
   private HttpHeaders makeResponseHeaders(HttpResponse response) {
     HttpHeaders result = new HttpHeaders();
-    Header h = response.getFirstHeader("Content-Type");
-    result.set(h.getName(), h.getValue());
+    for(Header h : response.getAllHeaders()){
+      result.set(h.getName(), h.getValue());
+    }
     return result;
   }
 

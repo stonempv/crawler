@@ -118,18 +118,6 @@ public class CrawlerQueueControllerTest {
 
   }
 
-  @Test
-  public void testCrawlTaskDeletion(){
-    given(this.queueService.deleteCrawlTask(any(String.class))).willReturn(true);
-    ResponseEntity<?> response = queueController.deleteCrawlTask("1234");
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-  }
 
-  @Test
-  public void testCrawlTaskDeletionNotAvailable(){
-    given(this.queueService.deleteCrawlTask(any(String.class))).willReturn(false);
-    ResponseEntity<?> response = queueController.deleteCrawlTask("2345");
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.GONE);
-  }
 
 }

@@ -5,15 +5,15 @@ import com.stonempv.crawler.common.crawler.CrawlerRequest;
 import com.stonempv.crawler.common.crawler.QueueResponse;
 import com.stonempv.crawler.queue.backend.CrawlerQueueService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.support.SendResult;
-import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 
@@ -39,32 +39,35 @@ public class CrawlerQueueController {
       String taskId = queueService.addCrawlTask(new URL(decorateURL(request.getUrl())));
 
       if (taskId != null) {
-        return ResponseEntity.accepted().body(new CrawlerCreateResponse(queueTaskUrl(taskId)));
+        URI uri = queueService.getQueueUri(new Integer(taskId));
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setLocation(uri);
+        return ResponseEntity.accepted().headers(responseHeaders).body("");
+
       } else {
-        return new ResponseEntity<>("Your Crawl Request was not accepted", HttpStatus.NOT_ACCEPTABLE);
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("");
       }
 
     } catch (MalformedURLException e){
-      return new ResponseEntity<>("URL Passed is not a valid URL", HttpStatus.BAD_REQUEST);
+      return ResponseEntity.badRequest().body("MalformedURLException");
     }
 
   }
 
   @RequestMapping(path = "/queue/{taskId}", method = RequestMethod.GET)
   public @ResponseBody ResponseEntity<?> isCrawlTaskInQueue(@PathVariable("taskId") String taskId) {
-    if (queueService.isCrawlTaskInQueue(taskId)) {
-      return ResponseEntity.ok().body(new QueueResponse("pending", queueTaskUrl(taskId)));
-    } else {
-      return new ResponseEntity<>(new QueueResponse("processed", crawlerTaskUrl(taskId)), HttpStatus.GONE);
-    }
-  }
+    CrawlerQueueService.Queue_State state = queueService.getTaskState(new Integer(taskId));
 
-  @RequestMapping(path = "/queue/{taskId}", method = RequestMethod.DELETE)
-  public @ResponseBody ResponseEntity<?> deleteCrawlTask(@PathVariable("taskId") String taskId){
-    if (queueService.deleteCrawlTask(taskId)){
-      return ResponseEntity.ok().body("");
-    } else {
-      return new ResponseEntity("", HttpStatus.GONE);
+    switch (state) {
+      case NOT_FOUND:
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("");
+      case PROCESSED:
+        URI uri = queueService.getProcessedUri(new Integer(taskId));
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setLocation(uri);
+        return ResponseEntity.status(HttpStatus.GONE).headers(responseHeaders).body("");
+      default:
+        return ResponseEntity.ok().body("");
     }
   }
 
@@ -77,11 +80,5 @@ public class CrawlerQueueController {
     return url;
   }
 
-  public static String queueTaskUrl(String taskId){
-    return "/api/queue/" + taskId;
-  }
 
-  public static String crawlerTaskUrl(String taskId){
-    return "/api/crawler/" + taskId;
-  }
 }
