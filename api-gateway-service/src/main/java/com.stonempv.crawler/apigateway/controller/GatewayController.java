@@ -5,6 +5,7 @@ import com.stonempv.crawler.apigateway.utils.ContentRequestTransformer;
 import com.stonempv.crawler.apigateway.utils.HeadersRequestTransformer;
 import com.stonempv.crawler.apigateway.utils.URLRequestTransformer;
 import org.apache.http.Header;
+import org.apache.http.HttpMessage;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -54,18 +55,24 @@ public class GatewayController {
   @RequestMapping(value = "/api/**", method = {GET, POST, DELETE})
   @ResponseBody
   public ResponseEntity<String> proxyRequest(HttpServletRequest request) throws NoSuchRequestHandlingMethodException, IOException, URISyntaxException {
-    logger.info("originalReques: {}", request);
     HttpUriRequest proxiedRequest = createHttpUriRequest(request);
-    logger.info("request: {}", proxiedRequest);
     HttpResponse proxiedResponse = httpClient.execute(proxiedRequest);
-    logger.info("Response {}", proxiedResponse.getStatusLine().getStatusCode());
     return new ResponseEntity<>(read(proxiedResponse.getEntity().getContent()), makeResponseHeaders(proxiedResponse), HttpStatus.valueOf(proxiedResponse.getStatusLine().getStatusCode()));
+
   }
 
   private HttpHeaders makeResponseHeaders(HttpResponse response) {
     HttpHeaders result = new HttpHeaders();
+   /* for(Header h : response.getAllHeaders()){
+      result.set(h.getName(), h.getValue());
+    }*/
     Header h = response.getFirstHeader("Content-Type");
     result.set(h.getName(), h.getValue());
+
+    h = response.getFirstHeader("Location");
+    if (h != null) {
+      result.set(h.getName(), h.getValue());
+    }
     return result;
   }
 

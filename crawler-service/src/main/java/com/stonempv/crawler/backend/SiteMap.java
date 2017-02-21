@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -15,18 +16,29 @@ public class SiteMap {
   @Id
   private String id;
   private SortedMap<String, WebPage> pages;
+  private ArrayList<String> badLinks;
 
   public SiteMap(String id) {
     this.id = convertId(id);
     pages = new TreeMap<>();
+    badLinks = new ArrayList<String>();
   }
 
   public void addWebPage(URL url, WebPage page) {
     pages.put(addTrailingSlash(url.getPath()), page);
   }
 
+  public void addBadLink(URL url) { badLinks.add(addTrailingSlash(url.getPath())); }
+
   public boolean hasPage(URL url) {
-    return pages.containsKey(addTrailingSlash(url.getPath()));
+    boolean found;
+    String path = addTrailingSlash(url.getPath());
+
+    found = pages.containsKey(path);
+    if(!found){
+      found = badLinks.contains(path);
+    }
+    return found;
   }
 
   public String getId(){
