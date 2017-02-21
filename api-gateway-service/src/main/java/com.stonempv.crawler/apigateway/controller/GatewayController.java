@@ -55,19 +55,22 @@ public class GatewayController {
   @RequestMapping(value = "/api/**", method = {GET, POST, DELETE})
   @ResponseBody
   public ResponseEntity<String> proxyRequest(HttpServletRequest request) throws NoSuchRequestHandlingMethodException, IOException, URISyntaxException {
-    logger.info("originalReques: {}", request);
     HttpUriRequest proxiedRequest = createHttpUriRequest(request);
-    logger.info("request: {}", proxiedRequest);
     HttpResponse proxiedResponse = httpClient.execute(proxiedRequest);
-    logger.info("Response {}", proxiedResponse.getStatusLine().getStatusCode());
-    logger.info("Headers {}", proxiedResponse.getHeaders("Location"));
     return new ResponseEntity<>(read(proxiedResponse.getEntity().getContent()), makeResponseHeaders(proxiedResponse), HttpStatus.valueOf(proxiedResponse.getStatusLine().getStatusCode()));
 
   }
 
   private HttpHeaders makeResponseHeaders(HttpResponse response) {
     HttpHeaders result = new HttpHeaders();
-    for(Header h : response.getAllHeaders()){
+   /* for(Header h : response.getAllHeaders()){
+      result.set(h.getName(), h.getValue());
+    }*/
+    Header h = response.getFirstHeader("Content-Type");
+    result.set(h.getName(), h.getValue());
+
+    h = response.getFirstHeader("Location");
+    if (h != null) {
       result.set(h.getName(), h.getValue());
     }
     return result;

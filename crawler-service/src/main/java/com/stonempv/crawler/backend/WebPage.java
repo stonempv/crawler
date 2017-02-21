@@ -3,6 +3,7 @@ package com.stonempv.crawler.backend;
 import org.springframework.data.annotation.Id;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -17,6 +18,7 @@ public class WebPage {
   private HashMap<String, String> internalPages;
   private HashMap<String, String> externalLinks;
   private HashMap<String, String> otherResources;
+  private ArrayList<String> badLinks;
 
   public WebPage(String title, String href, String host){
     this.title = title;
@@ -26,6 +28,7 @@ public class WebPage {
     internalPages = new HashMap<String, String>();
     externalLinks = new HashMap<String, String>();
     otherResources = new HashMap<String, String>();
+    badLinks = new ArrayList<String>();
   }
 
   public void addChildPage(String title, String href) {
@@ -47,6 +50,8 @@ public class WebPage {
     return externalLinks;
   }
   public HashMap<String, String> getOtherResources() { return otherResources; }
+  public ArrayList<String> getBadLinks() { return badLinks; }
+
 
   private boolean isLocalURL(String url){
     try {

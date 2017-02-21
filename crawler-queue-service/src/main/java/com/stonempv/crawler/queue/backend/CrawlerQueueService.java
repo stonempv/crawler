@@ -6,7 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.kafka.support.SendResult;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
@@ -87,6 +90,14 @@ public class CrawlerQueueService {
       return Queue_State.IN_QUEUE;
     }
   }
+
+  @KafkaListener(topics = "Crawler.processed")
+  public void doCrawl(@Payload String message,
+                      @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) Integer key) {
+    LOGGER.info("received message='{}'", message);
+    this.resultsMap.put(key, message);
+  }
+
 
   public URI getProcessedUri(Integer taskId){
     try {

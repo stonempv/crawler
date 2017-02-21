@@ -20,22 +20,24 @@ public class WebPageCrawl {
 
     WebPage webPage = new WebPage(doc.title(), doc.location(), host);
 
-    Elements elements = doc.body().select("a[href]");
-    for (Element element : elements) {
-      String href = element.attr("abs:href");
-      String title = element.ownText();
+    if (doc.body() != null) {
+      Elements elements = doc.body().select("a[href]");
+      for (Element element : elements) {
+        String href = element.attr("abs:href");
+        String title = element.ownText();
 
-      if (href != ""){
-        webPage.addChildPage(title, href);
+        if (href != "") {
+          webPage.addChildPage(title, href);
+        }
       }
-    }
 
-    Elements imgs = doc.body().select("img");
-    for (Element img : imgs) {
-      String href =  img.attr("src");
-      String title = img.attr("alt");
+      Elements imgs = doc.body().select("img");
+      for (Element img : imgs) {
+        String href = img.attr("src");
+        String title = img.attr("alt");
 
-      webPage.addOtherResource(title, href);
+        webPage.addOtherResource(title, href);
+      }
     }
 
     return webPage;
