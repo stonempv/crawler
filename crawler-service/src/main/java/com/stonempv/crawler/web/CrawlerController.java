@@ -1,18 +1,12 @@
 package com.stonempv.crawler.web;
 
 import com.stonempv.crawler.backend.SiteMap;
-import com.stonempv.crawler.common.crawler.CrawlerRequest;
 import com.stonempv.crawler.backend.CrawlerService;
 import com.stonempv.crawler.common.crawler.CrawlerResponse;
-import com.stonempv.crawler.common.crawler.QueueResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URL;
-import java.net.MalformedURLException;
 
 
 /**

@@ -1,6 +1,5 @@
 package com.stonempv.crawler.web;
 
-import com.stonempv.crawler.common.crawler.CrawlerCreateResponse;
 import com.stonempv.crawler.common.crawler.CrawlerRequest;
 import com.stonempv.crawler.backend.CrawlerQueueService;
 import org.junit.Test;
@@ -12,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 ;
 import static org.mockito.BDDMockito.*;
@@ -36,6 +38,7 @@ public class CrawlerQueueControllerTest {
   public void testAddCrawlValidUrlWithHttp() throws Exception {
     CrawlerRequest request = new CrawlerRequest("http://www.google.com");
     given(this.queueService.addCrawlTask(any(URL.class))).willReturn("1234");
+    given(this.queueService.getQueueUri(new Integer(1234))).willReturn(new URI("/api/queue/1234"));
 
     ResponseEntity<?> response = queueController.addCrawlTask(request);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.ACCEPTED);
@@ -43,9 +46,10 @@ public class CrawlerQueueControllerTest {
   }
 
   @Test
-  public void testAddCrawlValidUrlWithHttps() {
+  public void testAddCrawlValidUrlWithHttps() throws URISyntaxException{
     CrawlerRequest request = new CrawlerRequest("https://www.google.com");
     given(this.queueService.addCrawlTask(any(URL.class))).willReturn("1234");
+    given(this.queueService.getQueueUri(new Integer(1234))).willReturn(new URI("/api/queue/1234"));
 
     ResponseEntity<?> response = queueController.addCrawlTask(request);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.ACCEPTED);
@@ -53,9 +57,10 @@ public class CrawlerQueueControllerTest {
   }
 
   @Test
-  public void testAddCrawlValidUrlWithoutHttp() {
+  public void testAddCrawlValidUrlWithoutHttp() throws URISyntaxException{
     CrawlerRequest request = new CrawlerRequest("www.google.com");
     given(this.queueService.addCrawlTask(any(URL.class))).willReturn("1234");
+    given(this.queueService.getQueueUri(new Integer(1234))).willReturn(new URI("/api/queue/1234"));
 
     ResponseEntity<?> response = queueController.addCrawlTask(request);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.ACCEPTED);
@@ -83,39 +88,58 @@ public class CrawlerQueueControllerTest {
   }
 
   @Test
-  public void testAddCrawlAccepted(){
+  public void testAddCrawlAccepted() throws URISyntaxException{
     CrawlerRequest request = new CrawlerRequest("www.google.com");
-    CrawlerCreateResponse expectedResponse = new CrawlerCreateResponse("/api/queue/1234");
+
+    ResponseEntity expectedResponse = ResponseEntity.accepted().header("Location","/api/queue/1234").body("");
 
     given(this.queueService.addCrawlTask(any(URL.class))).willReturn("1234");
+    given(this.queueService.getQueueUri(new Integer(1234))).willReturn(new URI("/api/queue/1234"));
+
     ResponseEntity<?> response = queueController.addCrawlTask(request);
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.ACCEPTED);
-    assertThat(response.getBody()).isEqualToComparingFieldByField(expectedResponse);
+    assertThat(response).isEqualToComparingFieldByField(expectedResponse);
 
   }
-/*
+
   @Test
   public void testCrawlTaskIsInQueue(){
-    QueueResponse expectedResponse = new QueueResponse("pending", "/api/queue/1234");
 
-    given(this.queueService.getTaskState(any(Integer.class))).willReturn(true);
+    ResponseEntity expectedResponse = ResponseEntity.ok().body("");
+
+    given(this.queueService.getTaskState(any(Integer.class))).willReturn(CrawlerQueueService.Queue_State.IN_QUEUE);
+
     ResponseEntity<?> response = queueController.isCrawlTaskInQueue("1234");
+
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-    assertThat(response.getBody()).isEqualToComparingFieldByField(expectedResponse);
+    assertThat(response).isEqualToComparingFieldByField(expectedResponse);
 
   }
 
   @Test
-  public void testCrawlTaskNotInQueue(){
-    QueueResponse expectedResponse = new QueueResponse("processed", "/api/crawler/2345");
+  public void testCrawlTaskIsProcessed() throws URISyntaxException{
+    ResponseEntity expectedResponse = ResponseEntity.status(HttpStatus.GONE).header("Location","/api/crawler/www_test_com").body("");
 
-    given(this.queueService.isCrawlTaskInQueue(any(String.class))).willReturn(false);
+    given(this.queueService.getTaskState(any(Integer.class))).willReturn(CrawlerQueueService.Queue_State.PROCESSED);
+    given(this.queueService.getProcessedUri(any(Integer.class))).willReturn(new URI("/api/crawler/www_test_com"));
+
     ResponseEntity<?> response = queueController.isCrawlTaskInQueue("2345");
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.GONE);
-    assertThat(response.getBody()).isEqualToComparingFieldByField(expectedResponse);
+
+    assertThat(response).isEqualToComparingFieldByField(expectedResponse);
 
   }
-*/
+
+  @Test
+  public void testCrawlTaskNotFound() {
+    ResponseEntity expectedResponse = ResponseEntity.status(HttpStatus.NOT_FOUND).body("");
+
+    given(this.queueService.getTaskState(any(Integer.class))).willReturn(CrawlerQueueService.Queue_State.NOT_FOUND);
+
+    ResponseEntity<?> response = queueController.isCrawlTaskInQueue("2345");
+
+    assertThat(response).isEqualToComparingFieldByField(expectedResponse);
+
+  }
+
 
 
 }

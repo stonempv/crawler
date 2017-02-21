@@ -28,7 +28,7 @@ public class CrawlerServiceMainTests {
   @Test
   public void checkValidPost() {
     ResponseEntity<CrawlerResponse> responseEntity =
-            restTemplate.postForEntity("/api/crawler",
+            restTemplate.postForEntity("/api/crawler/",
                     new CrawlerRequest("http://www.thisdoesntresolve.com/"),
                     CrawlerResponse.class);
 

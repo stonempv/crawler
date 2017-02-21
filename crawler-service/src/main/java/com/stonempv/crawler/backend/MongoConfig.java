@@ -22,7 +22,7 @@ public class MongoConfig {
   public MappingMongoConverter mongoConverter() throws Exception {
     DbRefResolver dbRefResolver = new DefaultDbRefResolver(mongoFactory);
     MappingMongoConverter mongoConverter = new MappingMongoConverter(dbRefResolver, mongoMappingContext);
-    //this is my customization
+
     mongoConverter.setMapKeyDotReplacement("_");
     return mongoConverter;
   }
