@@ -38,7 +38,7 @@ Wala!
 3. ~~Provide new endpoint for querying the status of a crawl~~
 4. ~~Provide a new endpoint to retrieve the results of a query~~
 5. ~~Split the responsibility for doing the crawl and presenting the results~~
-6. ~~Look at how multithreading could be used to do the crawl~~
+6. Look at how multithreading could be used to do the crawl
 7. Add unit tests
 8. ~~Git Ignore .DS_Store~~
 9. Add swagger documentation

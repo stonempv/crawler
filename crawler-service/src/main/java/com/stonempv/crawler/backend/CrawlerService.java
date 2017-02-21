@@ -15,9 +15,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 
 /**
  * Created by mi332208 on 13/02/2017.
@@ -35,12 +33,13 @@ public class CrawlerService {
 
   protected CrawlerService()  {}
 
-
   @KafkaListener(topics = "Crawler.new")
   public void doCrawl(@Payload String message,
                       @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) Integer key) {
     LOGGER.info("received message='{}'", message);
     LOGGER.info("received key='{}'", key);
+
+
     try {
       URL url = new URL(message);
       HttpCrawler crawler = new HttpCrawler(url);
@@ -77,7 +76,5 @@ public class CrawlerService {
   public SiteMap returnResults(String crawlId) {
     return repository.findById(crawlId);
   }
-
-
 
 }
