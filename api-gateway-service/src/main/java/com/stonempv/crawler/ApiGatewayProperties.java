@@ -1,4 +1,4 @@
-package com.stonempv.crawler.apigateway;
+package com.stonempv.crawler;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.bind.annotation.RequestMethod;

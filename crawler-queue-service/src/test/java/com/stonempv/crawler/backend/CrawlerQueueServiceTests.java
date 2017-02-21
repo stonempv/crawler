@@ -1,4 +1,4 @@
-package com.stonempv.crawler.queue.backend;
+package com.stonempv.crawler.backend;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +9,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.net.URL;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 
 /**

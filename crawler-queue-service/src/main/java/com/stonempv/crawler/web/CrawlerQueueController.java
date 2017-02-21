@@ -1,9 +1,7 @@
-package com.stonempv.crawler.queue.web;
+package com.stonempv.crawler.web;
 
-import com.stonempv.crawler.common.crawler.CrawlerCreateResponse;
 import com.stonempv.crawler.common.crawler.CrawlerRequest;
-import com.stonempv.crawler.common.crawler.QueueResponse;
-import com.stonempv.crawler.queue.backend.CrawlerQueueService;
+import com.stonempv.crawler.backend.CrawlerQueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 

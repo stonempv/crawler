@@ -1,11 +1,10 @@
-package com.stonempv.crawler.apigateway.controller;
+package com.stonempv.crawler.controller;
 
-import com.stonempv.crawler.apigateway.ApiGatewayProperties;
-import com.stonempv.crawler.apigateway.utils.ContentRequestTransformer;
-import com.stonempv.crawler.apigateway.utils.HeadersRequestTransformer;
-import com.stonempv.crawler.apigateway.utils.URLRequestTransformer;
+import com.stonempv.crawler.ApiGatewayProperties;
+import com.stonempv.crawler.utils.ContentRequestTransformer;
+import com.stonempv.crawler.utils.HeadersRequestTransformer;
+import com.stonempv.crawler.utils.URLRequestTransformer;
 import org.apache.http.Header;
-import org.apache.http.HttpMessage;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;

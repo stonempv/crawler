@@ -1,6 +1,6 @@
-package com.stonempv.crawler.apigateway.main;
+package com.stonempv.crawler.main;
 
-import com.stonempv.crawler.apigateway.ApiGatewayServiceConfiguration;
+import com.stonempv.crawler.ApiGatewayServiceConfiguration;
 import org.springframework.boot.SpringApplication;
 
 /**

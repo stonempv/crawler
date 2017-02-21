@@ -1,6 +1,6 @@
-package com.stonempv.crawler.queue;
+package com.stonempv.crawler;
 
-import com.stonempv.crawler.queue.web.CrawlerQueueWebConfiguration;
+import com.stonempv.crawler.web.CrawlerQueueWebConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.stonempv.crawler.apigateway;
+package com.stonempv.crawler;
 
 import org.springframework.http.HttpStatus;
 

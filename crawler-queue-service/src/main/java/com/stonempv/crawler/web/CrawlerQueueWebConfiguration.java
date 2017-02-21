@@ -1,6 +1,6 @@
-package com.stonempv.crawler.queue.web;
+package com.stonempv.crawler.web;
 
-import com.stonempv.crawler.queue.backend.CrawlerQueueBackendConfiguration;
+import com.stonempv.crawler.backend.CrawlerQueueBackendConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;

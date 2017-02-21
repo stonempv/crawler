@@ -1,6 +1,6 @@
-package com.stonempv.crawler.apigateway.utils;
+package com.stonempv.crawler.utils;
 
-import com.stonempv.crawler.apigateway.ApiGatewayProperties;
+import com.stonempv.crawler.ApiGatewayProperties;
 import org.apache.http.client.methods.RequestBuilder;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;

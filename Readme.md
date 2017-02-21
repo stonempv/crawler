@@ -41,7 +41,7 @@ Wala!
 6. Look at how multithreading could be used to do the crawl
 7. Add unit tests
 8. ~~Git Ignore .DS_Store~~
-9. Add swagger documentation
+9. ~~Add swagger documentation~~
 
 
 Thanks for your help

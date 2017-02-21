@@ -1,4 +1,4 @@
-package com.stonempv.crawler.queue.backend;
+package com.stonempv.crawler.backend;
 
 
 import org.slf4j.Logger;
@@ -11,9 +11,7 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.ListenableFutureCallback;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;

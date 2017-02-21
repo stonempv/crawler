@@ -3,6 +3,7 @@ apply plugin: 'org.springframework.boot'
 dependencies {
 	compile project(":common")
 
+	compile project(":common-swagger")
 	compile "org.springframework.boot:spring-boot-starter-web"
 	compile 'org.jsoup:jsoup:1.10.2'
 	compile "org.springframework.kafka:spring-kafka"

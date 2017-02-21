@@ -1,4 +1,4 @@
-package com.stonempv.crawler.queue.backend;
+package com.stonempv.crawler.backend;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;

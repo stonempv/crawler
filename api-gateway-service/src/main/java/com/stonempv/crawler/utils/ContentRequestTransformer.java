@@ -1,26 +1,25 @@
-package com.stonempv.crawler.apigateway.utils;
+package com.stonempv.crawler.utils;
 
 import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Enumeration;
+import java.util.stream.Collectors;
 
-public class HeadersRequestTransformer extends ProxyRequestTransformer {
+public class ContentRequestTransformer extends ProxyRequestTransformer {
 
   @Override
   public RequestBuilder transform(HttpServletRequest request) throws NoSuchRequestHandlingMethodException, URISyntaxException, IOException {
     RequestBuilder requestBuilder = predecessor.transform(request);
 
-    Enumeration<String> headerNames = request.getHeaderNames();
-    while (headerNames.hasMoreElements()) {
-      String headerName = headerNames.nextElement();
-      String headerValue = request.getHeader(headerName);
-      if (headerName.equals("x-access-token")) {
-        requestBuilder.addHeader(headerName, headerValue);
-      }
+    String requestContent = request.getReader().lines().collect(Collectors.joining(""));
+    if (!requestContent.isEmpty()) {
+      StringEntity entity = new StringEntity(requestContent, ContentType.APPLICATION_JSON);
+      requestBuilder.setEntity(entity);
     }
 
     return requestBuilder;
