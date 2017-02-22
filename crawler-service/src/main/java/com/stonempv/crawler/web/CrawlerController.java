@@ -1,7 +1,7 @@
 package com.stonempv.crawler.web;
 
-import com.stonempv.crawler.backend.SiteMap;
 import com.stonempv.crawler.backend.CrawlerService;
+import com.stonempv.crawler.backend.SiteMap;
 import com.stonempv.crawler.common.crawler.CrawlerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

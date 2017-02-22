@@ -1,7 +1,7 @@
 package com.stonempv.crawler.web;
 
-import com.stonempv.crawler.common.crawler.CrawlerRequest;
 import com.stonempv.crawler.backend.CrawlerQueueService;
+import com.stonempv.crawler.common.crawler.CrawlerRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +11,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.*;
 
-import static org.assertj.core.api.Assertions.*;
+;
 
 /**
  * Created by mi332208 on 17/02/2017.

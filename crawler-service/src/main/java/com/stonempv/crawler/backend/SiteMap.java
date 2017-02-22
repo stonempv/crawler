@@ -1,6 +1,5 @@
 package com.stonempv.crawler.backend;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 
 import java.net.URL;

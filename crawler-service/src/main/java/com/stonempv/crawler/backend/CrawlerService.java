@@ -1,6 +1,5 @@
 package com.stonempv.crawler.backend;
 
-import com.stonempv.crawler.common.crawler.CrawlerResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.concurrent.*;
 
 /**
  * Created by mi332208 on 13/02/2017.

@@ -1,7 +1,7 @@
 package com.stonempv.crawler.web;
 
-import com.stonempv.crawler.common.crawler.CrawlerRequest;
 import com.stonempv.crawler.backend.CrawlerQueueService;
+import com.stonempv.crawler.common.crawler.CrawlerRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

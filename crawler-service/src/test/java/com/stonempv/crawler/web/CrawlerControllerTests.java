@@ -2,22 +2,16 @@ package com.stonempv.crawler.web;
 
 import com.stonempv.crawler.backend.CrawlerService;
 import com.stonempv.crawler.backend.SiteMap;
-import com.stonempv.crawler.backend.WebPage;
 import com.stonempv.crawler.common.crawler.CrawlerResponse;
 import net.minidev.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.json.JsonContent;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.net.URI;
-import java.net.URISyntaxException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

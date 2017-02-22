@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by mi332208 on 14/02/2017.
