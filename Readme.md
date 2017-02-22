@@ -8,8 +8,7 @@ It also has an embedded website that is loaded at http://localhost:8080/ when st
 
 This can be used to test the endpoint (or a real address like http://www.wiprodigital.com/ can be).
 
-This website is used for the integration tests so modifying this site may affect the success of the integration tests and conversly the integration tests require the server to be running to be 100% successful.
-
+You can view available endpoints via swagger at http://localhost:8081/swagger-ui.html and http://localhost:8082/swagger-ui.html
 ### How to build
 Clone the git repository
 ```
