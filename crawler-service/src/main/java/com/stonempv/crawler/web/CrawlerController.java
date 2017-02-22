@@ -29,7 +29,7 @@ public class CrawlerController {
     if (map != null) {
       return ResponseEntity.ok().body(new CrawlerResponse(map.getId(), map.getPages()));
     } else {
-      return new ResponseEntity<>("Request Not Found", HttpStatus.NOT_FOUND);
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("");
     }
   }
 

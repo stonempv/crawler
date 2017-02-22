@@ -94,7 +94,7 @@ public class CrawlerQueueControllerTest {
     ResponseEntity expectedResponse = ResponseEntity.accepted().header("Location","/api/queue/1234").body("");
 
     given(this.queueService.addCrawlTask(any(URL.class))).willReturn("1234");
-    given(this.queueService.getQueueUri(new Integer(1234))).willReturn(new URI("/api/queue/1234"));
+    given(this.queueService.getQueueUri(any(Integer.class))).willReturn(new URI("/api/queue/1234"));
 
     ResponseEntity<?> response = queueController.addCrawlTask(request);
     assertThat(response).isEqualToComparingFieldByField(expectedResponse);
