@@ -15,8 +15,8 @@ import java.util.Map;
  */
 public class HttpCrawler {
 
-  private SiteMap siteMap;
 
+  private SiteMap siteMap;
 
   private static final Logger LOGGER = LoggerFactory
           .getLogger(HttpCrawler.class);
@@ -24,8 +24,6 @@ public class HttpCrawler {
   public HttpCrawler(URL url) {
     this.siteMap = new SiteMap(url.toString());
   }
-
-
 
 
   public void doCrawl(URL url) {

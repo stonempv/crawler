@@ -94,6 +94,8 @@ public class CrawlerQueueService {
                       @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) Integer key) {
     LOGGER.info("received message='{}'", message);
     this.resultsMap.put(key, message);
+    LOGGER.info("key = {}", key);
+    LOGGER.info("Exists in map = {}", this.resultsMap.get(key));
   }
 
 

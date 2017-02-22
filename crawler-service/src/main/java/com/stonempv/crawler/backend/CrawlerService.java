@@ -9,6 +9,7 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
@@ -18,6 +19,7 @@ import java.net.URL;
 /**
  * Created by mi332208 on 13/02/2017.
  */
+@Service
 public class CrawlerService {
 
   @Autowired
